@@ -1,0 +1,81 @@
+import pandas as pd 
+import numpy as np 
+ 
+# Creating a dummy dataset 
+data = { 
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'], 
+    'Age': [25, 30, 35, 40, 45], 
+    'Salary': [50000, 60000, 70000, 80000, 90000], 
+    'Department': ['HR', 'IT', 'Finance', 'HR', 'IT'], 
+    'Start_Date': pd.to_datetime(['2020-01-01', '2019-03-15', '2021-05-20', '2018-09-10', '2022-02-28']), 
+    'Experience': [5, 10, 3, 15, 2], 
+    'Rating': [4.2, 3.8, 4.5, 4.0, 4.7] 
+} 
+ 
+df = pd.DataFrame(data) 
+df
+
+--------Question 1: Selecting a Subset of the DataFrame 
+Let's select employees who are older than 30: -----------
+subset=df[df['Age']>30]
+subset
+
+-----Question 3: Calculating Summary Statistics 
+Let's calculate summary statistics for the numerical columns in the DataFrame:--------
+summary_stats=df[['Age','Salary','Experience','Rating']].describe()
+summary_stats
+
+---------Question 4: Reshaping the Layout of Tables 
+Let's reshape the DataFrame to have "Name" as the index and "Department" as columns, with "Salary" as values: ---------
+reshaped_data = df.melt(id_vars='Name', var_name='Department', value_name='Salary')
+print(reshaped_data)
+
+---------Question 5: Combining Data from Multiple Tables 
+Let's create another DataFrame with bonus information and merge it with the original 
+DataFrame:-----------
+merge_data = { 
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
+    'Bonus': [3000, 5000, 1000, 6000, 2000] 
+} 
+Bonus=pd.DataFrame(merge_data)
+Bonus
+
+merge_data=pd.merge(df,Bonus, on="Name")
+merge_data
+
+
+-----Question 6: Manipulating Textual Data 
+Let's create a new column based on the length of the employee's name: --------
+df['Length_EmpName']=len(df['Name'])
+df
+
+------Question 7: Filtering Data Based on Multiple Conditions 
+Let's filter the DataFrame to include only employees from the IT department who are older 
+than 30:--------
+filter_data=df[(df['Department']=='IT') & (df['Age']>30)]
+filter_data
+
+------Question 8: Creating a New Column Based on Conditions 
+Let's create a new column called "Performance" based on the employee's rating: ---------
+def performance(rating):
+    if rating>4.5:
+        return 'Excellent'
+    elif rating>4.5:
+        return 'Good'
+    elif rating>3.8:
+        return 'Average'
+    else:
+        return 'Bad'
+df['Performance']=df['Rating'].apply(performance)
+df
+
+---------Question 9: Calculating Group-Wise Summary Statistics 
+Let's calculate the mean salary and experience for each department: -----------
+summary_stats = df.groupby('Department').agg({'Salary': 'mean', 'Experience': 'mean'})
+print(summary_stats)
+
+--------Question 10: Sorting Data 
+Let's sort the DataFrame by age in descending order:--------
+sorted = df.sort_values(by='Age', ascending=False)
+sorted
+
