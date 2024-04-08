@@ -79,3 +79,41 @@ Let's sort the DataFrame by age in descending order:--------
 sorted = df.sort_values(by='Age', ascending=False)
 sorted
 
+
+-------Question 11: Concatenating DataFrames 
+Let's create a new DataFrame with additional employee information and concatenate it with 
+the original DataFrame:-------
+additional_data={
+    'Name':['Ruchi', 'Raashi', 'Raghav'],
+    'Age': [21,'nan',25],
+    'Salary':[40000, 50000, 30000],
+    'Department':['nan', 'IT', 'HR'],
+    'Start_Date' : pd.to_datetime(['2021-04-25','2021-07-21','2019-01-01']),
+    'Experience':['nan','nan','nan'],
+    'Rating' : [3.8, 4.7, 4.8]
+    }
+df_additional=pd.DataFrame(additional_data)
+concatenated_data=pd.concat([df,df_additional],ignore_index=True)
+concatenated_data
+
+
+
+---------Question 12: Handling Missing Data 
+Let's introduce some missing data and fill it with the mean salary:------
+missing_data={
+    'Name':['Riya', 'Luci'],
+    'Age': [21,22],
+    'Salary':[np.nan,np.nan],
+    'Department':['HR', 'IT'],
+    'Start_Date' : pd.to_datetime(['2021-09-25','2021-04-21']),
+    'Experience':['4','1'],
+    'Rating' : [4.9, 3.5]
+    }
+df2=pd.DataFrame(missing_data)
+df2
+#For Finding the mean of salary
+Salary_mean=df['Salary'].mean()
+Salary_mean
+df2=df2.fillna(value={'Salary':70000})
+df2
+
